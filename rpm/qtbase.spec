@@ -16,7 +16,7 @@
 
 Name:       qt5
 Summary:    Cross-platform application and UI framework
-Version:    5.1.0
+Version:    5.1.0+git31
 Release:    1%{?dist}
 Group:      Qt/Qt
 License:    LGPLv2.1 with exception or GPLv3
@@ -52,6 +52,10 @@ BuildRequires:  sharutils
 #BuildRequires:  gdb
 BuildRequires:  python
 BuildRequires:  pkgconfig(fontconfig)
+
+# documentation
+BuildRequires:	pkgconfig(Qt5Help)
+BuildRequires:	qt5-tools
 
 %if %{with X11}
 BuildRequires:  pkgconfig(ice)
@@ -610,6 +614,12 @@ make %{?_smp_mflags}
 %install
 rm -rf %{buildroot}
 %make_install
+
+make docs
+make qch_docs
+make install_qch_docs
+
+
 #
 # We don't need qt5/Qt/
 rm -rf %{buildroot}/%{_includedir}/qt5/Qt
